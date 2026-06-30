@@ -1,8 +1,20 @@
+# You’re building an API for a simple event management system. The API should:
+
+# Allow users to add a new event with a POST request to /events.
+# Let users update an existing event title via PATCH to /events/<id>.
+# Enable users to remove an event by sending a DELETE to /events/<id>.
+# The API should respond with structured JSON and appropriate HTTP status codes.
+
+# Use @app.route() decorators with the appropriate methods argument.
+# Accept and handle JSON data in the request body using request.get_json().
+# Simulate data persistence using an in-memory list of Event objects.
+# Format all output with jsonify() and include helpful error messages.
+
 from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
-# Simulated data
+# Simulated date
 class Event:
     def __init__(self, id, title):
         self.id = id
