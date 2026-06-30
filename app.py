@@ -34,10 +34,18 @@ events = [
 @app.route("/events", methods=["POST"])
 def create_event():
     # TODO: Task 2 - Design and Develop the Code
+    data = request.get_json()
+    
+    if not data or "title" not in data:
+        return jsonify({"error": "Can't find 'title' in the request"}), 400
 
     # TODO: Task 3 - Implement the Loop and Process Each Element
+    new_id = events[-1].id + 1 if events else 1
+    new_event = Event(id=new_id, title=data["title"])
+    events.append(new_event)
 
     # TODO: Task 4 - Return and Handle Results
+    return jsonify(new_event.to_dict()), 201
     pass
 
 # TODO: Task 1 - Define the Problem
@@ -45,10 +53,18 @@ def create_event():
 @app.route("/events/<int:event_id>", methods=["PATCH"])
 def update_event(event_id):
     # TODO: Task 2 - Design and Develop the Code
+    data = request.get_json()
+    
+    if not data or "title" not in data:
+        return jsonify({"error": "Can't find 'title' in the request"}), 400
 
     # TODO: Task 3 - Implement the Loop and Process Each Element
+    for event in events:
+        if event.id == event_id:
+            event.title = data["title"]
 
     # TODO: Task 4 - Return and Handle Results
+    return jsonify(event.to_dict()), 200
     pass
 
 # TODO: Task 1 - Define the Problem
