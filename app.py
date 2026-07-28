@@ -43,7 +43,6 @@ def create_event():
     events.append(new_event)
     return jsonify(new_event.to_dict()), 201
 
-
 @app.route("/events/<int:id>", methods=["PATCH"])
 def update_event(id):
     data = request.get_json()
@@ -59,7 +58,10 @@ def update_event(id):
 def delete_event(id):
     global events
     event = next((e for e in events if e.id == id), None)
-    
+    if not event:
+        return ("Event not found", 404)
+    events = [e for e in events if e.id != id]
+    return ("Event deleted", 204)
 
 if __name__ == "__main__":
     app.run(debug=True)
